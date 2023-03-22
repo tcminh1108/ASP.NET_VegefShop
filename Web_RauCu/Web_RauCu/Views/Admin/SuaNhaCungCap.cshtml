@@ -1,0 +1,56 @@
+﻿@model Web_RauCu.Models.NhaCungCap
+@{
+    ViewBag.Title = "SuaNhaCungCap";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title text-center text-uppercase" id="exampleModalLabel">Sửa Nhà Cung Cấp</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label for="exampleInputFile">Mã NCC: </label>
+                    <label> @Model.Ma_NCC</label>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputFile">Tên NCC</label>
+                    <br />
+                    <input type="text" name="tenncc" value="@Model.Ten_NCC">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputFile">Gmail</label>
+                    <br />
+                    <input type="number" name="gmail" value="@Model.Gmail_NCC">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputFile">Địa chỉ</label>
+                    <br />
+                    <input type="number" name="diachi" value="@Model.Diachi_NCC">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputFile">SĐT</label>
+                    <br />
+                    <input type="number" name="sdt" value="@Model.Dienthoai_NCC">
+                </div>
+
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary btn-lg">Sửa</button>
+                </div>
+            }
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+        </div>
+    </div>
+</div>
+

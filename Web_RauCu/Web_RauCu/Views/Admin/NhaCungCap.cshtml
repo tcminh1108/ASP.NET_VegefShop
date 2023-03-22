@@ -1,0 +1,66 @@
+﻿@using Web_RauCu.Models;
+@using PagedList.Mvc;
+@model PagedList.PagedList<NhaCungCap>
+@{
+    ViewBag.Title = "NhaCungCap";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Quản lý nhà cung cấp</h3>
+                <div class="box-body">
+                    <a href="@Url.Action("ThemNhaCungCap","Admin")" data-toggle="modal" class="btn btn-app">
+                        <i class="fa fa-edit"></i> Thêm nhà cung cấp
+                    </a>
+                </div>
+            </div>
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên nhà cung cấp</th>
+                        <th>Gmail</th>
+                        <th>Địa chỉ</th>
+                        <th>Số điện thoại</th>
+                        <th>Chức năng</th>
+                    </tr>
+                    @foreach (var sp in Model)
+                    {
+                        <tr>
+                            <td>@sp.Ma_NCC</td>
+                            <td>@sp.Ten_NCC</td>
+                            <td>@sp.Gmail_NCC</td>
+                            <td>@sp.Diachi_NCC</td>
+                            <td>@sp.Dienthoai_NCC</td>
+                            <td>
+                                <button type="button">
+                                    <a href="@Url.Action("CapNhatNhaCungCap","Admin", new {Ma_NCC = @sp.Ma_NCC})">
+                                        Cập Nhật
+                                    </a>
+                                </button>
+                                <button type="button" onclick="confirm('Bạn chắc chắn muốn xóa nhà cung cấp này?')">
+                                    <a href="@Url.Action("XoaNhaCungCap","Admin", new {Ma_NCC = @sp.Ma_NCC})">
+                                        Xóa
+                                    </a>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </table>
+                <div class="row mt-5">
+                    <div class="col text-center">
+                        <div class="block-27">
+                            <ul>
+                                <li>@Html.PagedListPager(Model, page => Url.Action("NhaCungCap", new { page = page }))</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Web_RauCu.Models.CT_DonDatHang>
+@{
+    ViewBag.Title = "CT_DDH";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Chi tiết đơn đặt hàng</h3>
+            </div>
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Mã sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Hình ảnh</th>
+                        <th>Số lượng</th>
+                        <th>Giá bán</th>
+                    </tr>
+                    @foreach (var sp in Model)
+                    {
+                        <tr>
+                            <td>@sp.Ma_SP</td>
+                            <td>@sp.SanPham.Ten_SP</td>
+                            <td>
+                                <div class="d-flex">
+                                    <img style="height:40px; width:40px;" src="@sp.SanPham.Hinhanh" alt="@sp.SanPham.Ten_SP">
+                                </div>
+                            </td>
+                            <td><span class="label label-primary">@sp.Soluong</span></td>
+                            <td><span class="label label-success">@sp.Giaban</span></td>
+                        </tr>
+                    }
+                </table>
+
+            </div>
+
+        </div>
+        <div class="row mt-5">
+            <div class="col text-center">
+                <div class="block-27">
+                    <ul>
+                        <button>Thoát</button>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

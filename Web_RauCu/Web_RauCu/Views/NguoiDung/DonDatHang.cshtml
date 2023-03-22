@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Web_RauCu.Models.DonDatHang>
+@{
+    ViewBag.Title = "DonDatHang";
+    Layout = "~/Views/Shared/_LayoutTrangCaNhan.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Đơn đặt hàng</h3>
+            </div>
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Mã đơn</th>
+                        <th>Người đặt</th>
+                        <th>Ngày đặt</th>
+                        <th>Tổng tiền</th>
+                        <th>Tình trạng thanh toán</th>
+                        <th>Chức năng</th>
+                    </tr>
+                    @foreach (var ddh in Model)
+                    {
+                        <tr>
+                            <td>@ddh.Ma_DDH</td>
+                            <td>@ddh.NguoiDung.Hoten_ND</td>
+                            <td>@ddh.Ngaydat</td>
+                            <td>@ddh.TongTien</td>
+                            <td><span class="label label-danger">@ddh.Dathanhtoan</span></td>
+                            <td>
+                                <button type="button">
+                                    <a href="#">
+                                        Hủy Đơn
+                                    </a>
+                                </button>
+                                <button type="button">
+                                    <a href="@Url.Action("CT_DDH","NguoiDung", new {Ma_DDH = @ddh.Ma_DDH})">
+                                        Xem chi tiết
+                                    </a>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

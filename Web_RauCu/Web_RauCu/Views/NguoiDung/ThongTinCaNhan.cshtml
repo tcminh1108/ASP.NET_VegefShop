@@ -1,0 +1,54 @@
+﻿@model Web_RauCu.Models.NguoiDung
+@{
+    ViewBag.Title = "ThongTinCaNhan";
+    Layout = "~/Views/Shared/_LayoutTrangCaNhan.cshtml";
+}
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title text-center text-uppercase" id="exampleModalLabel">Thông tin cá nhân</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label for="exampleInputFile">Tài khoản: </label>
+                    <label> @Model.Taikhoan_ND</label>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputFile">Họ tên:</label>
+                    <br />
+                    <input type="text" name="tennd" value="@Model.Hoten_ND">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputFile">Gmail:</label>
+                    <br />
+                    <input type="text" name="gmailnd" value="@Model.Gmail_ND">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputFile">Địa chỉ:</label>
+                    <br />
+                    <input type="text" name="diachind" value="@Model.Diachi_ND">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputFile">Sdt:</label>
+                    <br />
+                    <input type="text" name="sdtnd" value="@Model.Dienthoai_ND">
+                </div>
+
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary btn-lg">Sửa</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

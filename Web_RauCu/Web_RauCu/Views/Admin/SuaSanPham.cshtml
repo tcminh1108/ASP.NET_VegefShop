@@ -1,0 +1,68 @@
+﻿@model Web_RauCu.Models.SanPham
+@{
+    ViewBag.Title = "SuaSanPham";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title text-center text-uppercase" id="exampleModalLabel">Sửa Sản Phẩm</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label for="exampleInputFile">Mã sản phẩm: </label>
+                    <label> @Model.Ma_SP</label>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputFile">Tên sản phẩm</label>
+                    <br />
+                    <input type="text" name="tensp" value="@Model.Ten_SP">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputFile">Giá bán</label>
+                    <br />
+                    <input type="number" name="giaban" value="@Model.Giaban">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputFile">Số lượng</label>
+                    <br />
+                    <input type="number" name="soluong" value="@Model.Soluongton">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputFile">Loại sản phẩm</label>
+                    <br />
+                    @Html.DropDownList("Ma_LSP")
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputFile">Nhà cung cấp</label>
+                    <br />
+                    @Html.DropDownList("Ma_NCC")
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputFile">Đang bán?</label>
+                    <br />
+                    <input type="text" name="tinhtrang" value="@Model.Tinhtrang">
+                </div>
+
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary btn-lg">Sửa</button>
+                </div>
+            }
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+        </div>
+    </div>
+</div>
+

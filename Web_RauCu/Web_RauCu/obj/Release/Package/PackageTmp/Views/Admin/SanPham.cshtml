@@ -1,0 +1,78 @@
+﻿@using Web_RauCu.Models;
+@using PagedList.Mvc;
+@model PagedList.PagedList<SanPham>
+@{
+    ViewBag.Title = "SanPham";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Quản lý sản phẩm</h3>
+                <div class="box-body">
+                    <a href="@Url.Action("ThemSanPham","Admin")" data-toggle="modal" class="btn btn-app">
+                        <i class="fa fa-edit"></i> Nhập sản phẩm
+                    </a>
+                </div>
+            </div>         
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <tr>
+                        <th>ID</th>
+                        <th>Hình ảnh</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá bán</th>
+                        <th>Khuyến mãi</th>
+                        <th>Giá khuyến mãi</th>
+                        <th>Ngày đăng</th>
+                        <th>Số lượng</th>
+                        <th>Chức năng</th>
+                    </tr>
+                    @foreach (var sp in Model)
+                    {
+                        <tr>
+                            <td>@sp.Ma_SP</td>
+                            <td>
+                                <div class="d-flex">
+                                    <img style="height:40px; width:40px;" src="~/images_SP/@sp.Hinhanh" alt="@sp.Ten_SP">
+                                </div>
+                            </td>
+                            <td>@sp.Ten_SP</td>
+                            <td><span class="label label-danger">@String.Format("{0:0,0}", sp.Giaban) VND</span></td>
+                            <td><span class="label label-warning">@sp.Khuyenmai %</span></td>
+                            <td><span class="label label-success">@String.Format("{0:0,0}", sp.Giakhuyenmai) VND</span></td>
+                            <td> @String.Format("{0:dd/MM/yyyy}", sp.Ngaydangban)</td>
+                            <td>@sp.Soluongton</td>
+                            <td>
+                                <button type="button">
+                                    <a href="@Url.Action("CapNhatSanPham","Admin", new {Ma_SP = @sp.Ma_SP})">
+                                        Cập Nhật
+                                    </a>
+                                </button>
+                                <button type="button" onclick="confirm('Bạn chắc chắn muốn xóa sản phẩm này?')">
+                                    <a href="@Url.Action("XoaSanPham","Admin", new {Ma_SP = @sp.Ma_SP})">
+                                        Xóa
+                                    </a>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </table>
+                <div class="row mt-5">
+                    <div class="col text-center">
+                        <div class="block-27">
+                            <ul>
+                                <li>@Html.PagedListPager(Model, page => Url.Action("SanPham", new { page = page }))</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Web_RauCu.Models.LoaiSanPham>
+<div id="sportswear" class="panel-collapse collapse">
+    <div class="panel-body">
+        <ul>
+            @foreach (var lsp in Model)
+            {
+                <li><a href="@Url.Action("SPTheoLoai","VegefShop",new {Ma_LSP = lsp.Ma_LSP})">@lsp.Ten_LSP </a></li>
+            }
+        </ul>
+    </div>
+</div>
+

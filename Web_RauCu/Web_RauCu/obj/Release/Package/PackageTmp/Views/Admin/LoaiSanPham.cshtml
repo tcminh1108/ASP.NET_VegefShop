@@ -1,0 +1,60 @@
+﻿@using Web_RauCu.Models;
+@using PagedList.Mvc;
+@model PagedList.PagedList<LoaiSanPham>
+@{
+    ViewBag.Title = "LoaiSanPham";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Quản lý loại sản phẩm</h3>
+                <div class="box-body">
+                    <a href="@Url.Action("ThemLoaiSanPham","Admin")" data-toggle="modal" class="btn btn-app">
+                        <i class="fa fa-edit"></i> Thêm loại sản phẩm
+                    </a>
+                </div>
+            </div>
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên loại sản phẩm</th>
+                        <th>Chức năng</th>
+                    </tr>
+                    @foreach (var sp in Model)
+                    {
+                        <tr>
+                            <td>@sp.Ma_LSP</td>
+                            <td>@sp.Ten_LSP</td>
+                            <td>
+                                <button type="button">
+                                    <a href="@Url.Action("CapNhatLoaiSanPham","Admin", new {Ma_LSP = @sp.Ma_LSP})">
+                                        Cập Nhật
+                                    </a>
+                                </button>
+                                <button type="button" onclick="confirm('Bạn chắc chắn muốn xóa loại sản phẩm này?')">
+                                    <a href="@Url.Action("XoaLoaiSanPham","Admin", new {Ma_LSP = @sp.Ma_LSP})">
+                                        Xóa
+                                    </a>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </table>
+                <div class="row mt-5">
+                    <div class="col text-center">
+                        <div class="block-27">
+                            <ul>
+                                <li>@Html.PagedListPager(Model, page => Url.Action("LoaiSanPham", new { page = page }))</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

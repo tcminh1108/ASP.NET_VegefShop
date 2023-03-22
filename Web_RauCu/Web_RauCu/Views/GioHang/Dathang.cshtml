@@ -1,0 +1,80 @@
+﻿@using Web_RauCu.Models
+@model List<GioHang>
+@{
+    NguoiDung nd = (NguoiDung)Session["taikhoan"];
+    ViewBag.Title = "Dathang";
+    Layout = "~/Views/Shared/_LayoutGioHang.cshtml";
+}
+
+<section id="cart_items">
+    <div class="container">
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed">
+                <thead>
+                    <tr class="cart_menu">
+                        <td class="image">Sản phẩm</td>
+                        <td class="description">Thông tin</td>
+                        <td class="price">Đơn giá</td>
+                        <td class="quantity">Số lượng</td>
+                        <td class="total">Thành tiền</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var sp in Model)
+                    {
+                        <tr>
+                            <td class="cart_product">
+                                <a href=""><img style=" height: 75px; width: 75px;" src="~/images_SP/@sp.sHinhanh" alt="@sp.sTen_SP"></a>
+                            </td>
+                            <td class="cart_description">
+                                <h4><a href="">@sp.sTen_SP</a></h4>
+                                <p>Mã sản phẩm: @sp.iMa_SP</p>
+                            </td>
+                            <td class="cart_price">
+                                <p>@string.Format("{0:0,0}", sp.dGiaban) VND</p>
+                            </td>
+                            <td class="cart_quantity">
+                                <p>@sp.iSoluong</p>
+                            </td>
+                            <td class="cart_total">
+                                <p class="cart_total_price">@string.Format("{0:0,0}", sp.dThanhtien) VND</p>
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<form method="post">
+    <section id="do_action">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="total_area">
+                        <ul>
+                            <li>Họ tên <span>@nd.Hoten_ND</span></li>
+                            <li>Số điện thoại <span>@nd.Dienthoai_ND</span></li>
+                            <li>Gmail <span>@nd.Gmail_ND</span></li>
+                            <li>Địa chỉ nhận hàng <span>@nd.Diachi_ND</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="total_area">
+                        <ul>
+                            <li>Đơn hàng <span>@string.Format("{0:0,0}", ViewBag.Tongtien) VND</span></li>
+                            <li>Ngày đặt hàng <span>@DateTime.Now.ToShortDateString()</span></li>
+                            <li>Phí vận chuyển <span>Miễn phí vận chuyển</span></li>
+                            <li>Tổng tiền <span>@string.Format("{0:0,0}", ViewBag.Tongtien) VND</span></li>
+                        </ul>
+                    </div> 
+                    <input type="submit" value="Đặt hàng">
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
+

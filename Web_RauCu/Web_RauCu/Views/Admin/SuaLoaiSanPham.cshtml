@@ -1,0 +1,39 @@
+﻿@model Web_RauCu.Models.LoaiSanPham
+@{
+    ViewBag.Title = "SuaLoaiSanPham";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title text-center text-uppercase" id="exampleModalLabel">Sửa Loại Sản Phẩm</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label for="exampleInputFile">Mã LSP: </label>
+                    <label> @Model.Ma_LSP</label>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputFile">Tên loại sản phẩm</label>
+                    <br />
+                    <input type="text" name="tenlsp" value="@Model.Ten_LSP">
+                </div>
+
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary btn-lg">Sửa</button>
+                </div>
+            }
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+        </div>
+    </div>
+</div>
+

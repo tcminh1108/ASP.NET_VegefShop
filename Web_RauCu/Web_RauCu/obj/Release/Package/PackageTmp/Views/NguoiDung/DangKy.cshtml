@@ -1,0 +1,23 @@
+﻿@model Web_RauCu.Models.NguoiDung
+@{
+    ViewBag.Title = "DangKy";
+    Layout = "~/Views/Shared/_LayoutNguoiDung.cshtml";
+}
+<div class="col-sm-8" style="padding-left:300px; padding-right:150px">
+    <div class="signup-form">
+        <h2 class="title text-center">ĐĂNG KÝ</h2>
+        <form method="post">
+            <h4 class="text-danger">@ViewBag.thongbao</h4>
+            <input type="text" placeholder="Họ tên" name="hoten_dk" />
+            <input type="text" placeholder="Tài khoản" name="taikhoan_dk" />
+            <input type="password" placeholder="Mật khẩu" name="matkhau_dk" />
+            <input type="password" placeholder="Nhập lại mật khẩu" name="nhaplaimatkhau_dk" />
+            <input type="email" placeholder="Email" name="email_dk" />
+            <input type="text" placeholder="Địa chỉ" name="diachi_dk" />
+            <input type="text" placeholder="Điện thoại" name="sdt_dk" />
+            <button type="submit" class="btn btn-default">Đăng Ký</button>
+        </form>
+    </div>
+</div>
+        
+

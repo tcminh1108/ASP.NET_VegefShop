@@ -1,0 +1,61 @@
+﻿@using Web_RauCu.Models;
+@using PagedList.Mvc;
+@model PagedList.PagedList<DonDatHang>
+@{
+    ViewBag.Title = "DonDatHang";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Quản lý đơn đặt hàng</h3>
+            </div>
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Mã đơn</th>
+                        <th>Người đặt</th>
+                        <th>Ngày đặt</th>
+                        <th>Tổng tiền</th>
+                        <th>Tình trạng thanh toán</th>
+                        <th>Chức năng</th>
+                    </tr>
+                    @foreach (var sp in Model)
+                    {
+                        <tr>
+                            <td>@sp.Ma_DDH</td>
+                            <td>@sp.NguoiDung.Hoten_ND</td>
+                            <td>@sp.Ngaydat</td>
+                            <td>@sp.TongTien</td>
+                            <td><span class="label label-danger">@sp.Dathanhtoan</span></td>
+                            <td>
+                                <button type="button">
+                                    <a href="#">
+                                        Cập Nhật
+                                    </a>
+                                </button>
+                                <button type="button">
+                                    <a href="@Url.Action("CT_DDH","Admin", new {Ma_DDH = @sp.Ma_DDH})">
+                                        Xem chi tiết
+                                    </a>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </table>
+                <div class="row mt-5">
+                    <div class="col text-center">
+                        <div class="block-27">
+                            <ul>
+                                <li>@Html.PagedListPager(Model, page => Url.Action("DonDatHang", new { page = page }))</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

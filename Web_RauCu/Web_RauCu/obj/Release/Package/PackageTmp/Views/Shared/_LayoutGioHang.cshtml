@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>VegefShop - Rau Củ Sạch</title>
+    <link href="~/Font_End/NguoiDung/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Font_End/NguoiDung/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Font_End/NguoiDung/css/prettyPhoto.css" rel="stylesheet">
+    <link href="~/Font_End/NguoiDung/css/price-range.css" rel="stylesheet">
+    <link href="~/Font_End/NguoiDung/css/animate.css" rel="stylesheet">
+    <link href="~/Font_End/NguoiDung/css/main.css" rel="stylesheet">
+    <link href="~/Font_End/NguoiDung/css/responsive.css" rel="stylesheet">
+</head><!--/head-->
+
+<body>
+    <header id="header">
+        <!--header-->
+        <div class="header_top">
+            <!--header_top-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="contactinfo">
+                            <ul class="nav nav-pills">
+                                <li><a href="#"><i class="fa fa-phone"></i> (+84) 919 504 570</a></li>
+                                <li><a href="#"><i class="fa fa-envelope"></i> vegefshop@gmail.com</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="social-icons pull-right">
+                            <ul class="nav navbar-nav">
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--/header_top-->
+
+        <div class="header-middle">
+            <!--header-middle-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="logo pull-left">
+                            <a href="@Url.Action("Index","VegefShop")"><img src="~/Font_End/NguoiDung/images/home/logo.png" alt="" /></a>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="shop-menu pull-right">
+                            <ul class="nav navbar-nav">
+                                @*<li><a href="#"><i class="fa fa-user"></i> Tài Khoản</a></li>
+                                    <li><a href="#"><i class="fa fa-star"></i> Yêu Thích</a></li>*@
+                                <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
+                                <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
+                                <li><a href="@Url.Action("DangKy","NguoiDung")"><i class="fa fa-lock"></i> Đăng nhập</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--/header-middle-->
+
+        <div class="header-bottom">
+            <!--header-bottom-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div class="mainmenu pull-left">
+                            <ul class="nav navbar-nav collapse navbar-collapse">
+                                <li><a href="@Url.Action("Index","VegefShop")" class="active">Trang chủ</a></li>
+                                <li class="dropdown">
+                                    <a href="#">Loại sản phẩm<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="shop.html">Products</a></li>
+                                        <li><a href="product-details.html">Product Details</a></li>
+                                        <li><a href="checkout.html">Checkout</a></li>
+                                        <li><a href="cart.html">Cart</a></li>
+                                        <li><a href="login.html">Login</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#">Nhà cung cấp<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="shop.html">Products</a></li>
+                                        <li><a href="product-details.html">Product Details</a></li>
+                                        <li><a href="checkout.html">Checkout</a></li>
+                                        <li><a href="cart.html">Cart</a></li>
+                                        <li><a href="login.html">Login</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="search_box pull-right">
+                            <input type="text" placeholder="Tìm kiếm..." />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--/header-bottom-->
+    </header>
+    <div>
+        @RenderBody()
+    </div>
+    <footer id="footer">
+        <!--Footer-->
+
+
+        <div class="footer-widget">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-1">
+
+                    </div>
+                    @*<div class="col-sm-4">
+                        <div class="single-widget">
+                            <h2>VegefShop</h2>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li>VegefShop luôn mong muốn mang lại những sức khỏe cho bạn và gia đình. </li>
+                            </ul>
+                        </div>
+                    </div>*@
+                    <div class="col-sm-2">
+                        <div class="single-widget">
+                            <h2>Danh mục</h2>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">Sản phẩm</a></li>
+                                <li><a href="#">Loại sản phẩm</a></li>
+                                <li><a href="#">Nhà cung cấp</a></li>
+                                <li><a href="#">Giỏ Hàng</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="single-widget">
+                            <h2>Liên Hệ</h2>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">Địa Chỉ: 130 Nguyễn Đình Chiểu, Phường Võ Thị Sáu, Quận 3, TP.Hồ Chí Minh</a></li>
+                                <li><a href="#">Hotline: (+84) 919 504 570</a></li>
+                                <li><a href="#">Email:  vegefshop@gmail.vn</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="api">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.3195676820724!2d106.70886021462249!3d10.786818092314448!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f1f54d0d6bf%3A0xd2015ee958f45b8a!2zQ-G7rWEgSMOgbmcgVGjhu7FjIFBo4bqpbSBI4buvdSBDxqEgLSBPcmdhbmljYSBCYSBTb24gUXXhuq1uIDE!5e0!3m2!1svi!2s!4v1651939611497!5m2!1svi!2s" width="500" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        @*<iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fthucphamhuucoorganica&tabs=timeline&width=340&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+                                style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+                        </iframe>*@
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
+                    <p class="pull-right">Designed by <span><a target="_blank" href="@Url.Action("DangNhap","Admin")">Themeum</a></span></p>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+    <script src="~/Font_End/NguoiDung/js/jquery.js"></script>
+    <script src="~/Font_End/NguoiDung/js/bootstrap.min.js"></script>
+    <script src="~/Font_End/NguoiDung/js/jquery.scrollUp.min.js"></script>
+    <script src="~/Font_End/NguoiDung/js/price-range.js"></script>
+    <script src="~/Font_End/NguoiDung/js/jquery.prettyPhoto.js"></script>
+    <script src="~/Font_End/NguoiDung/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Web_RauCu.Models.NhaCungCap>
+<div id="mens" class="panel-collapse collapse">
+    <div class="panel-body">
+        <ul>
+            @foreach (var ncc in Model)
+            {
+                <li><a href="@Url.Action("SPTheoNCC","VegefShop",new {Ma_NCC = ncc.Ma_NCC})">@ncc.Ten_NCC </a></li>
+            }
+        </ul>
+    </div>
+</div>
+

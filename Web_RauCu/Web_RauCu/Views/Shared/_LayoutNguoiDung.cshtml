@@ -1,0 +1,370 @@
+﻿@using Web_RauCu.Models
+@{
+    NguoiDung nd = (NguoiDung)Session["taikhoan"];
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>VegefShop - Rau Củ Sạch</title>
+    <link href="~/Font_End/NguoiDung/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Font_End/NguoiDung/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Font_End/NguoiDung/css/prettyPhoto.css" rel="stylesheet">
+    <link href="~/Font_End/NguoiDung/css/price-range.css" rel="stylesheet">
+    <link href="~/Font_End/NguoiDung/css/animate.css" rel="stylesheet">
+    <link href="~/Font_End/NguoiDung/css/main.css" rel="stylesheet">
+    <link href="~/Font_End/NguoiDung/css/responsive.css" rel="stylesheet">
+</head>
+<body>
+    <header id="header">
+        <!--header-->
+        <div class="header_top">
+            <!--header_top-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="contactinfo">
+                            <ul class="nav nav-pills">
+                                <li><a href="#"><i class="fa fa-phone"></i> (+84) 919 504 570</a></li>
+                                <li><a href="#"><i class="fa fa-envelope"></i> vegefshop@gmail.com</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="social-icons pull-right">
+                            <ul class="nav navbar-nav">
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--/header_top-->
+
+        <div class="header-middle">
+            <!--header-middle-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="logo pull-left">
+                            <a href="@Url.Action("Index","VegefShop")"><img style="height: 70px; width: 100px" src="~/Font_End/NguoiDung/images/home/logo.png" alt="" /></a>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="shop-menu pull-right">
+                            <ul class="nav navbar-nav">
+                                <li><button style="padding-top:10px" type="button" onclick="init()"><i class="fa fa-camera"> Mở Camera</i></button></li>
+                                <li><a href="@Url.Action("GioHang","GioHang")"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
+                                @if (Session["taikhoan"] == null)
+                                {
+                                    <li><a href="@Url.Action("DangNhap","NguoiDung")"><i class="fa fa-sign-in"></i> Đăng nhập</a></li>
+                                    <li><a href="@Url.Action("DangKy","NguoiDung")"><i class="fa fa-lock"></i> Đăng ký</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="@Url.Action("ThongTinCaNhan","NguoiDung", new {Ma_ND = @nd.Ma_ND})"><i class="fa fa-user"></i> @nd.Hoten_ND </a></li>
+                                    <li><a href="@Url.Action("Index","VegefShop")"><i class="fa fa-sign-out"></i> Đăng xuất</a></li>
+                                }
+                            </ul>
+                        </div>
+                        <div id="webcam-container"></div>
+                        <div id="label-container"></div>
+                        <script src="@Url.Content("https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js")"></script>
+                        <script src="@Url.Content("https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js")"></script>
+                        <script type="text/javascript">
+                            // More API functions here:
+                            // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
+
+                            // the link to your model provided by Teachable Machine export panel
+                            const URL = "https://teachablemachine.withgoogle.com/models/eXrEeGKlz/";
+
+                            let model, webcam, labelContainer, maxPredictions;
+
+                            // Load the image model and setup the webcam
+                            async function init() {
+                                const modelURL = URL + "model.json";
+                                const metadataURL = URL + "metadata.json";
+
+                                // load the model and metadata
+                                // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
+                                // or files from your local hard drive
+                                // Note: the pose library adds "tmImage" object to your window (window.tmImage)
+                                model = await tmImage.load(modelURL, metadataURL);
+                                maxPredictions = model.getTotalClasses();
+
+                                // Convenience function to setup a webcam
+                                const flip = true; // whether to flip the webcam
+                                webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
+                                await webcam.setup(); // request access to the webcam
+                                await webcam.play();
+                                window.requestAnimationFrame(loop);
+
+                                // append elements to the DOM
+                                document.getElementById("webcam-container").appendChild(webcam.canvas);
+                                labelContainer = document.getElementById("label-container");
+                            }
+
+                            async function loop() {
+                                webcam.update(); // update the webcam frame
+                                await predict();
+                                window.requestAnimationFrame(loop);
+                            }
+
+                            // run the webcam image through the image model
+                            async function predict() {
+                                // predict can take in an image, video or canvas html element
+                                const predictions = await model.predictTopK(webcam.canvas, 1);
+                                labelContainer.innerText = predictions[0].className;
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div><!--/header-middle-->
+
+        <div class="header-bottom">
+            <!--header-bottom-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div class="mainmenu pull-left">
+                            <ul class="nav navbar-nav collapse navbar-collapse">
+                                <li><a href="@Url.Action("Index","VegefShop")" class="active">TRANG CHỦ</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    @using (Html.BeginForm("TimKiem", "VegefShop"))
+                    {
+                        <div class="col-sm-3">
+                            <div class="search_box pull-right">
+                                <input name="tukhoa" type="text" placeholder="Tìm kiếm..." />
+                                <button type="submit">
+                                    tìm kiếm
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div><!--/header-bottom-->
+    </header><!--/header-->
+
+    <section id="slider">
+        <!--slider-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#slider-carousel" data-slide-to="1"></li>
+                            <li data-target="#slider-carousel" data-slide-to="2"></li>
+                        </ol>
+
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <div class="col-sm-6">
+                                    <h1><span>VEGEF</span>-SHOP</h1>
+                                    <h2>Website bán nông sản hàng đầu Việt Nam</h2>
+                                    <p>Cam kết chất lượng rau củ quả xanh sạch, tươi ngon. Được nhập mới mỗi ngày từ các nhà cung cấp uy tín!. </p>
+                                    <button type="button" class="btn btn-default get">Mua Ngay</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img src="~/Font_End/NguoiDung/images/home/bg_1.jpg" class="girl img-responsive" alt="" />
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="col-sm-6">
+                                    <h1><span>VEGEF</span>-SHOP</h1>
+                                    <h2>Website bán nông sản hàng đầu Việt Nam</h2>
+                                    <p>Cam kết chất lượng rau củ quả xanh sạch, tươi ngon. Được nhập mới mỗi ngày từ các nhà cung cấp uy tín!. </p>
+                                    <button type="button" class="btn btn-default get">Mua Ngay</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img src="~/Font_End/NguoiDung/images/home/bg_2.jpg" class="girl img-responsive" alt="" />
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <div class="col-sm-6">
+                                    <h1><span>VEGEF</span>-SHOP</h1>
+                                    <h2>Website bán nông sản hàng đầu Việt Nam</h2>
+                                    <p>Cam kết chất lượng rau củ quả xanh sạch, tươi ngon. Được nhập mới mỗi ngày từ các nhà cung cấp uy tín!. </p>
+                                    <button type="button" class="btn btn-default get">Mua Ngay</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img src="~/Font_End/NguoiDung/images/home/bg_3.jpg" class="girl img-responsive" alt="" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section><!--/slider-->
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="left-sidebar">
+                        <h2>Danh mục</h2>
+                        <div class="panel-group category-products" id="accordian">
+                            <!--category-productsr-->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
+                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                            Loại sản phẩm
+                                        </a>
+                                    </h4>
+                                </div>
+                                @Html.Action("Loaisanpham", "VegefShop")
+
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordian" href="#mens">
+                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                            Nhà cung cấp
+                                        </a>
+                                    </h4>
+                                </div>
+                                @Html.Action("Nhacungcap", "VegefShop")
+                            </div>
+                        </div><!--/category-products-->
+
+                        <div class="shipping text-center">
+                            <!--shipping-->
+                            <img src="~/Font_End/NguoiDung/images/home/shipping.jpg" alt="" />
+                        </div><!--/shipping-->
+
+                    </div>
+                </div>
+                <div>
+                    @RenderBody()
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Messenger Plugin chat Code -->
+    <div id="fb-root"></div>
+
+    <!-- Your Plugin chat code -->
+    <div id="fb-customer-chat" class="fb-customerchat">
+    </div>
+
+    <script>
+        var chatbox = document.getElementById('fb-customer-chat');
+        chatbox.setAttribute("page_id", "111091215161442");
+        chatbox.setAttribute("attribution", "biz_inbox");
+    </script>
+
+    <!-- Your SDK code -->
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                xfbml: true,
+                version: 'v15.0'
+            });
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <footer id="footer">
+        <!--Footer-->
+
+
+        <div class="footer-widget">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-1">
+
+                    </div>
+                    @*<div class="col-sm-4">
+                            <div class="single-widget">
+                                <h2>VegefShop</h2>
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li>VegefShop luôn mong muốn mang lại những sức khỏe cho bạn và gia đình. </li>
+                                </ul>
+                            </div>
+                        </div>*@
+                    <div class="col-sm-2">
+                        <div class="single-widget">
+                            <h2>Danh mục</h2>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">Sản phẩm</a></li>
+                                <li><a href="#">Loại sản phẩm</a></li>
+                                <li><a href="#">Nhà cung cấp</a></li>
+                                <li><a href="#">Giỏ Hàng</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="single-widget">
+                            <h2>Liên Hệ</h2>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">Địa Chỉ: 130 Nguyễn Đình Chiểu, Phường Võ Thị Sáu, Quận 3, TP.Hồ Chí Minh</a></li>
+                                <li><a href="#">Hotline: (+84) 919 504 570</a></li>
+                                <li><a href="#">Email:  vegefshop@gmail.vn</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="api">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.3195676820724!2d106.70886021462249!3d10.786818092314448!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f1f54d0d6bf%3A0xd2015ee958f45b8a!2zQ-G7rWEgSMOgbmcgVGjhu7FjIFBo4bqpbSBI4buvdSBDxqEgLSBPcmdhbmljYSBCYSBTb24gUXXhuq1uIDE!5e0!3m2!1svi!2s!4v1651939611497!5m2!1svi!2s" width="500" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        @*<iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fthucphamhuucoorganica&tabs=timeline&width=340&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+                                    style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+                            </iframe>*@
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
+                    <p class="pull-right">Designed by <span><a target="_blank" href="@Url.Action("DangNhap","Admin")">Themeum</a></span></p>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+    <script src="~/Font_End/NguoiDung/js/jquery.js"></script>
+    <script src="~/Font_End/NguoiDung/js/bootstrap.min.js"></script>
+    <script src="~/Font_End/NguoiDung/js/jquery.scrollUp.min.js"></script>
+    <script src="~/Font_End/NguoiDung/js/price-range.js"></script>
+    <script src="~/Font_End/NguoiDung/js/jquery.prettyPhoto.js"></script>
+    <script src="~/Font_End/NguoiDung/js/main.js"></script>
+</body>
+</html>
